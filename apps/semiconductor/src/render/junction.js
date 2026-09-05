@@ -26,15 +26,27 @@ export function createJunctionScene(bounds) {
     }
   }
 
-  function carrierField(ctx, x0, x1, y0, y1, kind, density, offset) {
+  /**
+   * Розсипає носіїв по прямокутнику послідовністю R2.
+   *
+   * Наївне `(i * просте) % висота` тут не годиться: для більшості пар чисел
+   * залишок ходить майже лінійним кроком, і точки шикуються в діагональний
+   * рядок замість того, щоб заповнити область. R2 — низькодискрепансна
+   * послідовність, побудована саме для рівномірного розкидання по площині,
+   * і вона так само детермінована: та сама картина при тому самому стані,
+   * тому зміни читаються як зміни, а не як мерехтіння.
+   */
+  const R2_X = 0.7548776662466927;
+  const R2_Y = 0.5698402909980532;
+
+  function carrierField(ctx, x0, x1, y0, y1, kind, density, seed) {
     if (x1 - x0 < 6) return;
     const count = Math.max(0, Math.min(26, density));
     for (let i = 0; i < count; i += 1) {
-      // Детермінована псевдовипадкова сітка: та сама картина при тому самому
-      // стані, тому зміни читаються як зміни, а не як мерехтіння.
-      const t = (i * 0.6180339887 + offset) % 1;
-      const x = Math.round(x0 + 3 + t * (x1 - x0 - 6));
-      const y = Math.round(y0 + 3 + ((i * 7919) % Math.max(1, y1 - y0 - 6)));
+      const tx = (seed + (i + 1) * R2_X) % 1;
+      const ty = (seed * 3 + (i + 1) * R2_Y) % 1;
+      const x = Math.round(x0 + 3 + tx * (x1 - x0 - 6));
+      const y = Math.round(y0 + 3 + ty * (y1 - y0 - 6));
       if (kind === "e") {
         disc(ctx, x, y, 2, PALETTE.electron);
         px(ctx, x - 1, y - 1, PALETTE.electronGlow);

@@ -1,23 +1,36 @@
-/* Піксельна тема: різкі краї, товсті рамки, обмежена палітра, без градієнтів.
-   Темна — бо сцена всередині кристала темна, і світла обгортка навколо неї
-   била б по очах контрастом. */
+/* Світла «паперова» тема: різкі краї й товсті рамки лишаються від піксель-арту,
+   але тло тепле й читабельне, як сторінка підручника.
+
+   Два рішення про шрифти. Суцільний текст — звичайний sans-serif: моноширинний
+   робив пояснення схожими на лог компілятора, а їх тут читають абзацами.
+   Числа, формули й підписи осей — моноширинні: там важливо, щоб цифри стояли
+   в колонку й не «стрибали» при зміні значення. */
 
 :root {
-  --ink: #d7e3ec;
-  --ink-dim: #8ea3b4;
-  --ink-faint: #5c7182;
-  --panel: #16202a;
-  --panel-raised: #1e2b37;
-  --panel-deep: #0e161d;
-  --edge: #2c3f4f;
-  --edge-light: #3d5568;
-  --accent: #4fc3f7;
-  --accent-warm: #ff7043;
-  --good: #8bc34a;
-  --warn: #ffd54f;
-  --bad: #ef5350;
+  --ink: #2b2721;
+  --ink-dim: #575043;
+  --ink-faint: #857c6c;
+  --paper: #f7f3e9;
+  --panel: #fbf8f0;
+  --panel-raised: #fffdf7;
+  --panel-deep: #efe9dc;
+  --edge: #cbc1ac;
+  --edge-light: #b3a892;
+  --accent: #12539e;
+  --accent-soft: #dce7f4;
+  --accent-warm: #c8401a;
+  --good: #3f7f2c;
+  --good-soft: #e2eeda;
+  --warn: #a06a12;
+  --warn-soft: #f6ecd6;
+  --bad: #b3341b;
+  --bad-soft: #f7e2dc;
   --px: 2px;
-  --font: ui-monospace, "DejaVu Sans Mono", "Cascadia Mono", Consolas, monospace;
+  /* Колір тла самої канви. Дублює PALETTE.crystal із palette.js — CSS не має
+     доступу до модуля, а підписи поверх сцени мусять обводитись саме ним. */
+  --crystal-bg: #f2ede1;
+  --font: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "DejaVu Sans Mono", "Cascadia Mono", Consolas, monospace;
 }
 
 * {
@@ -26,19 +39,18 @@
 
 body {
   margin: 0;
-  background: #080c11;
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 13px;
-  line-height: 1.45;
-  -webkit-font-smoothing: none;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .pixel-canvas {
   display: block;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  border: var(--px) solid var(--edge);
+  border: var(--px) solid var(--edge-light);
   background: var(--panel-deep);
 }
 
@@ -46,16 +58,16 @@ body {
 
 .btn {
   font: inherit;
-  padding: 5px 11px;
+  padding: 8px 15px;
   color: var(--ink);
   background: var(--panel-raised);
   border: var(--px) solid var(--edge-light);
-  box-shadow: inset -2px -2px 0 var(--panel-deep), inset 2px 2px 0 #2f4454;
+  box-shadow: inset -2px -2px 0 var(--panel-deep), inset 2px 2px 0 #fff;
   cursor: pointer;
 }
 
 .btn:hover:not(:disabled) {
-  background: #26374a;
+  background: #fff;
 }
 
 .btn:active:not(:disabled) {
@@ -71,27 +83,28 @@ body {
 }
 
 .btn--primary {
-  background: #1c5b74;
-  border-color: #2d84a8;
+  color: #fff;
+  background: var(--accent);
+  border-color: #0d3f79;
 }
 
 :where(button, input, a):focus-visible {
-  outline: var(--px) solid var(--warn);
+  outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* --- повзунок --- */
 
 .ctl {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .ctl__head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 3px;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
 .ctl__label {
@@ -101,22 +114,23 @@ body {
 
 .ctl__value {
   color: var(--ink);
+  font-family: var(--font-mono);
   font-weight: bold;
   text-align: right;
 }
 
 .ctl__hint {
-  margin: 3px 0 0;
+  margin: 5px 0 0;
   color: var(--ink-faint);
-  font-size: 11px;
-  line-height: 1.35;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .ctl__slider {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 12px;
+  height: 16px;
   margin: 0;
   background: var(--panel-deep);
   border: var(--px) solid var(--edge);
@@ -125,59 +139,60 @@ body {
 
 .ctl__slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 12px;
-  height: 16px;
-  margin-top: -1px;
+  width: 16px;
+  height: 22px;
+  margin-top: -3px;
   background: var(--accent);
-  border: var(--px) solid var(--panel-deep);
+  border: var(--px) solid var(--panel-raised);
   cursor: grab;
 }
 
 .ctl__slider::-moz-range-thumb {
-  width: 10px;
-  height: 14px;
+  width: 14px;
+  height: 20px;
   border-radius: 0;
   background: var(--accent);
-  border: var(--px) solid var(--panel-deep);
+  border: var(--px) solid var(--panel-raised);
   cursor: grab;
 }
 
 /* --- сегментований перемикач --- */
 
 .seg {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .seg__label {
   display: block;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   color: var(--ink-dim);
 }
 
 .seg__group {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 5px;
 }
 
 .seg__btn {
   font: inherit;
   flex: 1 1 auto;
-  padding: 5px 8px;
+  padding: 7px 11px;
   color: var(--ink-dim);
-  background: var(--panel-deep);
+  background: var(--panel-raised);
   border: var(--px) solid var(--edge);
   cursor: pointer;
 }
 
 .seg__btn:hover {
   color: var(--ink);
+  background: #fff;
 }
 
 .seg__btn[data-on="1"] {
-  color: #08121a;
+  color: #fff;
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: #0d3f79;
   font-weight: bold;
 }
 
@@ -185,9 +200,9 @@ body {
 
 .ro {
   border: var(--px) solid var(--edge);
-  border-left-width: 4px;
-  margin-bottom: 6px;
-  background: var(--panel-deep);
+  border-left-width: 5px;
+  margin-bottom: 7px;
+  background: var(--panel-raised);
 }
 
 .ro[data-tone="good"] {
@@ -206,9 +221,9 @@ body {
   font: inherit;
   display: flex;
   align-items: baseline;
-  gap: 7px;
+  gap: 9px;
   width: 100%;
-  padding: 5px 8px;
+  padding: 7px 10px;
   color: inherit;
   background: none;
   border: 0;
@@ -221,26 +236,28 @@ body {
 }
 
 .ro__symbol {
-  min-width: 26px;
+  min-width: 32px;
   color: var(--accent);
+  font-family: var(--font-mono);
   font-weight: bold;
 }
 
 .ro__label {
   flex: 1;
   color: var(--ink-dim);
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .ro__value {
   color: var(--ink);
+  font-family: var(--font-mono);
   font-weight: bold;
   white-space: nowrap;
 }
 
 .ro__body {
   display: none;
-  padding: 0 8px 8px 41px;
+  padding: 0 10px 10px 51px;
 }
 
 .ro[data-open="1"] .ro__body {
@@ -257,30 +274,32 @@ body {
 }
 
 .ro__why {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--ink-dim);
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .ro__formula {
   margin: 0 0 2px;
-  padding: 4px 6px;
-  color: var(--warn);
-  background: #0a1219;
-  border: 1px solid var(--edge);
-  font-size: 12px;
+  padding: 6px 8px;
+  color: #7a4a08;
+  background: var(--warn-soft);
+  border: 1px solid #e0cfa8;
+  font-family: var(--font-mono);
+  font-size: 14px;
   overflow-x: auto;
 }
 
 .ro__substituted {
   margin: 0;
-  padding: 4px 6px;
-  color: var(--ink-faint);
-  background: #0a1219;
+  padding: 6px 8px;
+  color: var(--ink-dim);
+  background: var(--panel-deep);
   border: 1px solid var(--edge);
   border-top: 0;
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 13px;
   overflow-x: auto;
 }
 
@@ -294,21 +313,21 @@ body {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgba(4, 8, 12, 0.82);
+  background: rgba(60, 52, 38, 0.45);
 }
 
 .modal {
   display: flex;
   flex-direction: column;
-  width: min(560px, 100%);
+  width: min(640px, 100%);
   max-height: 88vh;
   background: var(--panel);
   border: var(--px) solid var(--edge-light);
-  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 6px 6px 0 rgba(90, 80, 60, 0.25);
 }
 
 .modal--wide {
-  width: min(860px, 100%);
+  width: min(960px, 100%);
 }
 
 .modal__head {
@@ -316,31 +335,32 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 9px 12px;
+  padding: 11px 14px;
   background: var(--panel-raised);
   border-bottom: var(--px) solid var(--edge);
 }
 
 .modal__title {
   margin: 0;
-  font-size: 15px;
+  font-size: 19px;
 }
 
 .modal__close {
   font: inherit;
-  padding: 2px 8px;
+  padding: 3px 11px;
   color: var(--ink-dim);
-  background: none;
+  background: var(--panel-raised);
   border: var(--px) solid var(--edge);
   cursor: pointer;
 }
 
 .modal__close:hover {
   color: var(--ink);
+  background: #fff;
 }
 
 .modal__body {
-  padding: 12px;
+  padding: 16px;
   overflow-y: auto;
 }
 
@@ -348,33 +368,33 @@ body {
 
 .toasts {
   position: fixed;
-  right: 12px;
-  bottom: 12px;
+  right: 14px;
+  bottom: 14px;
   z-index: 60;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: min(320px, calc(100vw - 24px));
+  width: min(380px, calc(100vw - 28px));
 }
 
 .toast {
-  padding: 8px 10px;
-  background: var(--panel-raised);
+  padding: 11px 13px;
+  background: var(--good-soft);
   border: var(--px) solid var(--good);
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 0 rgba(90, 80, 60, 0.22);
 }
 
 .toast__title {
   display: block;
-  color: var(--good);
-  font-size: 12px;
+  color: #2e6420;
+  font-size: 15px;
 }
 
 .toast__text {
-  margin: 4px 0 0;
+  margin: 5px 0 0;
   color: var(--ink-dim);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 /* --- легенда --- */
@@ -382,7 +402,7 @@ body {
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 14px;
+  gap: 6px 18px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -391,23 +411,16 @@ body {
 .legend__item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .legend__dot {
-  width: 8px;
-  height: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.legend__dot[data-shape="ring"] {
-  border-radius: 50%;
-  background: none !important;
-  border-width: 2px;
-  border-color: currentColor;
+  width: 11px;
+  height: 11px;
+  border: 1px solid rgba(60, 52, 38, 0.35);
 }
 
 .legend__text {
   color: var(--ink-dim);
-  font-size: 11px;
+  font-size: 14px;
 }

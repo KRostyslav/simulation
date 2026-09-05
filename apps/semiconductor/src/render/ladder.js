@@ -22,7 +22,9 @@ export function createLadder(bounds) {
   }
 
   function draw(ctx, { n, p, ni, doping = 0, equilibrium = true }) {
-    const baseY = bounds.y + bounds.h - 6;
+    // Вісь піднята від низу смуги, щоб під нею вмістилися підписи декад
+    // (їх малює DOM-шар, див. ui/labels.js).
+    const baseY = bounds.y + bounds.h - 14;
 
     rect(ctx, bounds.x, bounds.y, bounds.w, bounds.h, PALETTE.crystalDeep);
     line(ctx, bounds.x, baseY, bounds.x + bounds.w - 1, baseY, PALETTE.axis);

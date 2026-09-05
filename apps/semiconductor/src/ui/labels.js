@@ -8,7 +8,7 @@
  * цілочисельному масштабі канви.
  */
 
-import { el } from "@edu/pixel-ui";
+import { el, PALETTE } from "@edu/pixel-ui";
 import { sci, decimal, withPrefix } from "@edu/explain";
 
 import { MODE } from "../physics/constants.js";
@@ -37,7 +37,7 @@ export function createLabels() {
     // Драбина концентрацій: степені десятки під віссю.
     for (let exp = 2; exp <= 20; exp += 4) {
       const x = 6 + ((exp - 2) / 18) * (WIDTH - 12);
-      place(x, 186, `10${supers(exp)}`, "label--axis", "center");
+      place(x, 181, `10${supers(exp)}`, "label--axis", "center");
     }
     const xFor = (value) =>
       6 + Math.max(0, Math.min(1, (Math.log10(value) - 2) / 18)) * (WIDTH - 12);
@@ -49,12 +49,12 @@ export function createLabels() {
 
   function junctionLabels(snapshot) {
     const { widthUm, xpUm, xnUm, bias, current, vbi } = snapshot.values;
-    place(10, 4, "p-область", "label--hole");
-    place(WIDTH - 10, 4, "n-область", "label--electron", "right");
+    place(8, 6, "p-область", "label--hole");
+    place(WIDTH - 8, 6, "n-область", "label--electron", "right");
     place(WIDTH / 2, 4, `Збіднений шар ${decimal(widthUm, 3)} мкм`, "label--tag", "center");
     place(
       WIDTH / 2,
-      136,
+      132,
       `x_p = ${decimal(xpUm, 3)} мкм · x_n = ${decimal(xnUm, 3)} мкм`,
       "label--axis",
       "center",
@@ -134,23 +134,27 @@ function supers(n) {
     .join("");
 }
 
-/** Легенда під канвою — постійна, бо без неї кольори нічого не означають. */
+/**
+ * Легенда під канвою — постійна, бо без неї кольори нічого не означають.
+ * Кольори беруться з PALETTE, а не дублюються рядками: інакше після зміни
+ * теми легенда називала б одні кольори, а сцена малювала б інші.
+ */
 export function legendItems(mode) {
   if (mode === MODE.junction) {
     return [
-      { color: "#4fc3f7", text: "електрон" },
-      { color: "#ff7043", text: "дірка (порожній зв'язок)" },
-      { color: "#c5e1a5", text: "іон донора ⊕" },
-      { color: "#e1bee7", text: "іон акцептора ⊖" },
-      { color: "#ffd54f", text: "внутрішнє поле" },
+      { color: PALETTE.electron, text: "електрон" },
+      { color: PALETTE.hole, text: "дірка (порожній зв'язок)" },
+      { color: PALETTE.donorIon, text: "іон донора ⊕" },
+      { color: PALETTE.acceptorIon, text: "іон акцептора ⊖" },
+      { color: PALETTE.fieldArrow, text: "внутрішнє поле" },
     ];
   }
   return [
-    { color: "#4fc3f7", text: "електрон" },
-    { color: "#ff7043", text: "дірка" },
-    { color: "#8bc34a", text: "атом донора (P)" },
-    { color: "#ba68c8", text: "атом акцептора (B)" },
-    { color: "#fff59d", text: "народження пари" },
+    { color: PALETTE.electron, text: "електрон" },
+    { color: PALETTE.hole, text: "дірка" },
+    { color: PALETTE.donor, text: "атом донора (P)" },
+    { color: PALETTE.acceptor, text: "атом акцептора (B)" },
+    { color: PALETTE.flashGen, text: "народження пари" },
   ];
 }
 

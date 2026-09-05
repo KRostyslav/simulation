@@ -31,7 +31,10 @@ export function createScene({ parent }) {
     bounds: { x: 8, y: 8, w: WIDTH - 16, h: CRYSTAL_BOX.h - 16 },
   });
   const ladder = createLadder(BOTTOM_BOX);
-  const junction = createJunctionScene({ x: 6, y: 6, w: WIDTH - 12, h: CRYSTAL_BOX.h - 12 });
+  // Сцена переходу починається нижче за кристалічну: над нею потрібна смуга
+  // під підписи «p-область», «n-область» і ширину шару, які інакше лягали б
+  // просто на рамку сцени.
+  const junction = createJunctionScene({ x: 6, y: 20, w: WIDTH - 12, h: CRYSTAL_BOX.h - 26 });
 
   const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)");
 

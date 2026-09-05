@@ -2,59 +2,61 @@
  * Фіксована палітра. Обмежений набір кольорів — головна ознака піксель-арту:
  * усе, що малюється, бере колір звідси, і сцена автоматично лишається цілісною.
  *
- * Кольори носіїв заряду навмисно контрастні між собою (холодний синій проти
- * теплого червоного): електрон і дірка — протилежні за знаком, і глядач має
- * розрізняти їх периферійним зором, не читаючи легенду щоразу.
+ * Тема світла, «паперова» — сцена має читатися як рисунок у підручнику, а не
+ * як осцилограф. Наслідок для решти кольорів: носії заряду й домішки мусять
+ * бути ТЕМНІШИМИ за тло, а не світитися на ньому. Тому сині та червоні тут
+ * насичені й глибокі — світлі пастельні відтінки на паперовому тлі просто
+ * зникли б, а це єдине, за чим гравець стежить очима.
  */
 export const PALETTE = {
   // тло й кристал
-  void: "#0e1218",
-  crystal: "#141b24",
-  crystalDeep: "#0b0f14",
+  void: "#e5ded0",
+  crystal: "#f2ede1",
+  crystalDeep: "#e0d8c6",
 
   // атоми кремнію та ковалентні зв'язки
-  siCore: "#5d7285",
-  siShell: "#41566a",
-  bond: "#2f4356",
-  bondBroken: "#4a3128",
-  bondElectron: "#7d93a8",
+  siCore: "#4a4437",
+  siShell: "#7b7261",
+  bond: "#a89c84",
+  bondBroken: "#d09a72",
+  bondElectron: "#585044",
 
   // вільні носії заряду
-  electron: "#4fc3f7",
-  electronGlow: "#a6e4ff",
-  hole: "#ff7043",
-  holeGlow: "#ffb59a",
+  electron: "#12539e",
+  electronGlow: "#5a93cf",
+  hole: "#c8401a",
+  holeGlow: "#f08050",
 
   // домішкові атоми та їхні нерухомі іони
-  donor: "#8bc34a",
-  donorIon: "#c5e1a5",
-  acceptor: "#ba68c8",
-  acceptorIon: "#e1bee7",
+  donor: "#4f9a3a",
+  donorIon: "#1c5e1c",
+  acceptor: "#8d4bb0",
+  acceptorIon: "#54176e",
 
   // p-n перехід
-  regionP: "#2a1a24",
-  regionN: "#16242a",
-  depletion: "#1f2b38",
-  depletionEdge: "#3d5a72",
-  fieldArrow: "#ffd54f",
+  regionP: "#f6e4dc",
+  regionN: "#dfeaf4",
+  depletion: "#ece5d3",
+  depletionEdge: "#968c76",
+  fieldArrow: "#b0741a",
 
   // графіки та службове
-  axis: "#546e7a",
-  grid: "#22303c",
-  curve: "#ffd54f",
-  curveAlt: "#ef5350",
-  marker: "#ffffff",
-  dim: "#37474f",
+  axis: "#6f6757",
+  grid: "#cdc3ad",
+  curve: "#b8430c",
+  curveAlt: "#12539e",
+  marker: "#2b2721",
+  dim: "#a79c86",
 
   // підсвітки подій
-  flashGen: "#fff59d",
-  flashRec: "#ff8a65",
+  flashGen: "#d59413",
+  flashRec: "#c8401a",
 };
 
-/** Тепліше світіння кристала при нагріванні — суто візуальний натяк на T. */
+/** Ледь помітний зсув тону кристала за температурою — теплий/холодний натяк. */
 export function crystalTint(temperatureK) {
-  if (temperatureK >= 600) return "#241a1a";
-  if (temperatureK >= 450) return "#1d1a1e";
-  if (temperatureK <= 150) return "#101a24";
+  if (temperatureK >= 600) return "#f7e5d5";
+  if (temperatureK >= 450) return "#f5eadb";
+  if (temperatureK <= 150) return "#e6edf4";
   return PALETTE.crystal;
 }

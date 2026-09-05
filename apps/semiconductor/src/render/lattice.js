@@ -33,15 +33,19 @@ function shuffledNodes(count, seed = 20240905) {
 const NODE_ORDER = shuffledNodes(COLS * ROWS);
 
 export function createLattice(bounds) {
-  const stepX = bounds.w / (COLS + 1);
-  const stepY = bounds.h / (ROWS + 1);
+  // Крок ділиться на кількість вузлів, а не на «кількість + 1», і перший
+  // вузол зміщено на пів кроку. Так ґратка стоїть симетрично й заповнює кадр:
+  // інакше праворуч і знизу лишався б порожній край, і вільні носії
+  // виглядали б так, ніби вони поза кристалом.
+  const stepX = bounds.w / COLS;
+  const stepY = bounds.h / ROWS;
 
   const nodes = [];
   for (let row = 0; row < ROWS; row += 1) {
     for (let col = 0; col < COLS; col += 1) {
       nodes.push({
-        x: Math.round(bounds.x + stepX * (col + 1)),
-        y: Math.round(bounds.y + stepY * (row + 1)),
+        x: Math.round(bounds.x + stepX * (col + 0.5)),
+        y: Math.round(bounds.y + stepY * (row + 0.5)),
         col,
         row,
       });
