@@ -1,0 +1,21 @@
+{
+  "name": "simulation",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Монорепа навчальних симуляцій з фізики",
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "preview": "turbo run preview",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3"
+  },
+  "packageManager": "pnpm@11.14.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

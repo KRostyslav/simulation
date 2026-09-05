@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🔬</text></svg>"
+    />
+    <title>Напівпровідники — піксельна лабораторія</title>
+    <meta
+      name="description"
+      content="Навчальна піксельна гра-пісочниця з фізики: власна і домішкова провідність кремнію, p-n перехід. Кожна дія пояснюється формулою з підставленими числами."
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="topbar__brand">
+          <span class="topbar__title">Лабораторія напівпровідників</span>
+          <span class="topbar__mode" id="mode-host"></span>
+        </div>
+        <div class="topbar__tools">
+          <span class="topbar__level" id="level-host"></span>
+          <button type="button" class="btn" id="codex-btn">Довідник</button>
+          <button type="button" class="btn btn--ghost" id="reset-btn">Скинути</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="stage">
+          <div class="stage__canvas" id="scene">
+            <div class="labels" id="labels"></div>
+          </div>
+          <div class="stage__views" id="view-host"></div>
+          <ul class="legend" id="legend"></ul>
+          <p class="stage__note" id="scale-note"></p>
+          <div id="commentary"></div>
+        </section>
+
+        <aside class="panel">
+          <div id="controls"></div>
+          <h3 class="panel__title">Що зараз у кристалі</h3>
+          <div id="readouts"></div>
+          <div id="warnings"></div>
+          <div id="goals"></div>
+        </aside>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

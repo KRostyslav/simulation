@@ -1,0 +1,492 @@
+/* Розкладка лабораторії. Базова піксельна тема — в @edu/pixel-ui/pixel.css. */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ------------------------------- шапка ------------------------------- */
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--panel-raised);
+  border-bottom: var(--px) solid var(--edge);
+}
+
+.topbar__brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar__title {
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.topbar__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar .seg,
+.topbar .seg__label {
+  margin: 0;
+}
+
+.topbar__level .seg__btn {
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+.btn--ghost {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* ------------------------------ розкладка ----------------------------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+  padding: 14px;
+}
+
+/* --------------------------------- сцена ------------------------------ */
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.stage__canvas {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.stage__views {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.stage__views .seg {
+  margin: 0;
+}
+
+.stage__note {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-dim);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* ------------------------- підписи поверх канви ------------------------ */
+
+.labels {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  color: var(--ink-dim);
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow:
+    1px 1px 0 #05080b,
+    -1px 1px 0 #05080b,
+    1px -1px 0 #05080b,
+    -1px -1px 0 #05080b;
+}
+
+.label[data-align="center"] {
+  transform: translateX(-50%);
+}
+
+.label[data-align="right"] {
+  transform: translateX(-100%);
+}
+
+.label--tag {
+  color: var(--ink);
+  font-weight: bold;
+}
+
+.label--axis {
+  color: var(--ink-faint);
+  font-size: 9px;
+}
+
+.label--electron {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.label--hole {
+  color: var(--accent-warm);
+  font-weight: bold;
+}
+
+.label--dim {
+  color: var(--ink-faint);
+}
+
+/* ------------------------------ коментар ------------------------------ */
+
+.comment {
+  padding: 10px 12px;
+  background: var(--panel);
+  border: var(--px) solid var(--edge-light);
+  border-left-width: 5px;
+  border-left-color: var(--accent);
+}
+
+.comment--fresh {
+  animation: comment-flash 0.5s steps(3);
+}
+
+@keyframes comment-flash {
+  from {
+    border-left-color: var(--warn);
+    background: #1c2a36;
+  }
+  to {
+    border-left-color: var(--accent);
+    background: var(--panel);
+  }
+}
+
+.comment__headline {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.comment__mechanism {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.comment__link,
+.ro__link,
+.warning__link,
+.goal__link {
+  font: inherit;
+  margin-top: 7px;
+  padding: 0;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  font-size: 11px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.comment__link:hover,
+.ro__link:hover,
+.warning__link:hover,
+.goal__link:hover {
+  color: var(--warn);
+}
+
+.ro__link {
+  display: block;
+}
+
+/* -------------------------------- панель ------------------------------ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--panel);
+  border: var(--px) solid var(--edge);
+}
+
+.panel__title,
+.controls__title,
+.goals__title {
+  margin: 12px 0 6px;
+  color: var(--ink-faint);
+  font-size: 11px;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.controls__group[hidden] {
+  display: none;
+}
+
+/* ----------------------------- попередження --------------------------- */
+
+.warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.warning {
+  padding: 7px 9px;
+  background: var(--panel-deep);
+  border: var(--px) solid var(--warn);
+  border-left-width: 5px;
+}
+
+.warning[data-tone="bad"] {
+  border-color: var(--bad);
+}
+
+.warning[data-tone="neutral"] {
+  border-color: var(--edge-light);
+}
+
+.warning__title {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--warn);
+  font-size: 12px;
+}
+
+.warning[data-tone="bad"] .warning__title {
+  color: var(--bad);
+}
+
+.warning[data-tone="neutral"] .warning__title {
+  color: var(--ink-dim);
+}
+
+.warning__text {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* --------------------------------- цілі ------------------------------- */
+
+.goals__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.goals__counter {
+  color: var(--good);
+  font-weight: bold;
+}
+
+.goals__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.goal {
+  background: var(--panel-deep);
+  border: var(--px) solid var(--edge);
+}
+
+.goal[data-done="1"] {
+  border-color: var(--good);
+}
+
+.goal__head {
+  font: inherit;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  width: 100%;
+  padding: 5px 8px;
+  color: var(--ink-dim);
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.goal__mark::before {
+  content: "□";
+  color: var(--ink-faint);
+}
+
+.goal[data-done="1"] .goal__mark::before {
+  content: "■";
+  color: var(--good);
+}
+
+.goal[data-done="1"] .goal__title {
+  color: var(--ink);
+}
+
+.goal__body {
+  display: none;
+  padding: 0 8px 8px 22px;
+}
+
+.goal[data-open="1"] .goal__body {
+  display: block;
+}
+
+.goal__task {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.goal__theory {
+  margin: 7px 0 0;
+  padding: 6px 8px;
+  color: var(--ink);
+  background: #0a1219;
+  border-left: 3px solid var(--good);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+/* ------------------------------- довідник ----------------------------- */
+
+.codex__layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 16px;
+}
+
+.codex__nav {
+  border-right: var(--px) solid var(--edge);
+  padding-right: 12px;
+}
+
+.codex__topic {
+  margin: 10px 0 4px;
+  color: var(--ink-faint);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.codex__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.codex__link {
+  font: inherit;
+  display: block;
+  width: 100%;
+  padding: 3px 0;
+  color: var(--ink-dim);
+  background: none;
+  border: 0;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.codex__link:hover {
+  color: var(--ink);
+}
+
+.codex__link[data-on="1"] {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.codex__link--inline {
+  display: inline;
+  width: auto;
+  margin-right: 12px;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.codex__heading {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.codex__para {
+  margin: 0 0 9px;
+  color: var(--ink-dim);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.codex__also {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: var(--px) solid var(--edge);
+  font-size: 11px;
+}
+
+.codex__alsoLabel {
+  margin-right: 8px;
+  color: var(--ink-faint);
+}
+
+/* ------------------------------ адаптивність --------------------------- */
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .codex__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .codex__nav {
+    border-right: 0;
+    border-bottom: var(--px) solid var(--edge);
+    padding: 0 0 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comment--fresh {
+    animation: none;
+  }
+}

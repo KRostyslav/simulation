@@ -1,0 +1,21 @@
+{
+  "name": "@edu/semiconductor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Піксельна лабораторія напівпровідників: власна і домішкова провідність, p-n перехід",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "node --check src/main.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@edu/explain": "workspace:*",
+    "@edu/pixel-ui": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}
