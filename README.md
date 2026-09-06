@@ -9,6 +9,8 @@
 | Пакет | Призначення |
 | --- | --- |
 | [apps/semiconductor](apps/semiconductor) | Піксельна лабораторія напівпровідників: власна і домішкова провідність, p-n перехід |
+| [apps/diode-lab](apps/diode-lab) | Лабораторна робота: дослідження вольт-амперної характеристики діода на віртуальному стенді |
+| [packages/diode](packages/diode) | Фізика діода: кремній і германій, n_i(T), рухливість, Шоклі, генерація, пробій |
 | [packages/pixel-ui](packages/pixel-ui) | Піксельний UI-шар: canvas із цілочисельним масштабом, палітра, примітиви малювання, віджети |
 | [packages/explain](packages/explain) | Ядро пояснень: величина не існує окремо від формули й причини |
 
@@ -17,6 +19,7 @@
 ```bash
 pnpm install
 pnpm dev --filter @edu/semiconductor   # одна гра
+pnpm dev --filter @edu/diode-lab       # лабораторна робота
 pnpm dev                               # усі застосунки
 pnpm build                             # збірка
 pnpm test                              # тести
@@ -26,14 +29,16 @@ pnpm lint                              # перевірка синтаксису
 Потрібен Node ≥ 20 і pnpm. Turborepo кешує результати тасків — повторна збірка
 без змін завершується миттєво.
 
-Тести фізики й `@edu/explain` не мають зовнішніх залежностей, тому
-запускаються навіть до `pnpm install`:
+Тести пакетів не мають зовнішніх залежностей, тому запускаються навіть до
+`pnpm install`:
 
 ```bash
-cd apps/semiconductor && node --test
-cd packages/explain   && node --test
-cd packages/pixel-ui  && node --test
+cd packages/diode    && node --test
+cd packages/explain  && node --test
+cd packages/pixel-ui && node --test
 ```
+
+Тестам застосунків потрібні симлінки воркспейсу, тобто виконаний `pnpm install`.
 
 ## Принцип, спільний для всіх симуляцій
 
@@ -64,7 +69,8 @@ makeReadout({
 
 1. Створіть `apps/<назва>` з `package.json` (`"name": "@edu/<назва>"`),
    `index.html` і `vite.config.js` — за зразком `apps/semiconductor`.
-2. Додайте залежності `"@edu/pixel-ui": "workspace:*"` і `"@edu/explain": "workspace:*"`.
+2. Додайте залежності `"@edu/pixel-ui": "workspace:*"` і `"@edu/explain": "workspace:*"`,
+   а для тем із напівпровідниками — ще й `"@edu/diode": "workspace:*"`.
 3. Опишіть предметну модель окремо від UI, під тестами, і лише потім малюйте.
 4. Реєструвати щось у `turbo.json` не потрібно — таски `dev`, `build`, `lint`,
    `test` уже описані в корені й підхопляться автоматично.

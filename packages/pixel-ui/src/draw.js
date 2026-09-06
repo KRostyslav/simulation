@@ -96,6 +96,53 @@ export function ring(ctx, cx, cy, r, color) {
 }
 
 /**
+ * Залитий трикутник — символ діода на схемі.
+ *
+ * Заливаємо порядковими рядками: для кожного цілого y знаходимо ліву й праву
+ * межу перетину трикутника з цим рядком і малюємо між ними горизонталь.
+ * Прийом старий, як растрова графіка, і тут він доречніший за canvas-шляхи:
+ * `ctx.fill()` дав би згладжені краї, а на канві з масштабом ×3 напівпрозорий
+ * піксель перетворюється на видиму сіру кайму й ламає піксельний вигляд.
+ *
+ * Нескінченні координати відкидаємо мовчки, як і решта примітивів: NaN тут
+ * дав би нескінченний цикл, тобто мертве зависання вкладки.
+ */
+export function triangle(ctx, x0, y0, x1, y1, x2, y2, color) {
+  const xs = [x0, x1, x2];
+  const ys = [y0, y1, y2];
+  if (![...xs, ...ys].every(Number.isFinite)) return;
+
+  ctx.fillStyle = color;
+  const top = Math.round(Math.min(...ys));
+  const bottom = Math.round(Math.max(...ys));
+  const edges = [
+    [x0, y0, x1, y1],
+    [x1, y1, x2, y2],
+    [x2, y2, x0, y0],
+  ];
+
+  for (let y = top; y <= bottom; y += 1) {
+    let left = Infinity;
+    let right = -Infinity;
+    for (const [ax, ay, bx, by] of edges) {
+      const lo = Math.min(ay, by);
+      const hi = Math.max(ay, by);
+      if (y < Math.round(lo) || y > Math.round(hi)) continue;
+      // Горизонтальне ребро дає одразу обидва свої кінці.
+      const x = ay === by ? [ax, bx] : [ax + ((y - ay) * (bx - ax)) / (by - ay)];
+      for (const value of x) {
+        if (value < left) left = value;
+        if (value > right) right = value;
+      }
+    }
+    if (left > right) continue;
+    const from = Math.round(left);
+    const width = Math.round(right) - from + 1;
+    ctx.fillRect(from, y, Math.max(1, width), 1);
+  }
+}
+
+/**
  * Дизеринг шаховим візерунком — класичний піксельний прийом для градієнтів
  * і напівпрозорості без альфа-каналу (збіднений шар, зона поля, тінь).
  */

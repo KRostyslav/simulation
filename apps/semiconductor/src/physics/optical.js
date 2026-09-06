@@ -9,6 +9,8 @@
 
 import { carrierLifetime } from "./doping.js";
 
+export { diffusionLength } from "@edu/diode";
+
 /**
  * Темп генерації пар [см⁻³·с⁻¹] при освітленості в «сонцях».
  *
@@ -37,7 +39,3 @@ export function excessCarriers({ suns, doping }) {
   return { excess: g * tau, tau, generation: g };
 }
 
-/** Дифузійна довжина L = √(D·τ) [см] — як далеко носій відходить до рекомбінації. */
-export function diffusionLength(diffusion, tau) {
-  return Math.sqrt(diffusion * tau);
-}

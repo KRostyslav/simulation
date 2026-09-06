@@ -14,6 +14,9 @@ importers:
 
   apps/semiconductor:
     dependencies:
+      '@edu/diode':
+        specifier: workspace:*
+        version: link:../../packages/diode
       '@edu/explain':
         specifier: workspace:*
         version: link:../../packages/explain
@@ -24,6 +27,8 @@ importers:
       vite:
         specifier: ^6.0.7
         version: 6.4.3
+
+  packages/diode: {}
 
   packages/explain: {}
 

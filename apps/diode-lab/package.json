@@ -1,0 +1,22 @@
+{
+  "name": "@edu/diode-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Лабораторна робота: дослідження вольт-амперної характеристики напівпровідникового діода",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "node --check src/main.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@edu/diode": "workspace:*",
+    "@edu/explain": "workspace:*",
+    "@edu/pixel-ui": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}

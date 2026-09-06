@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 180 node /tmp/claude-1000/-home-krostyslav-users-ros-dev-M-simulation/9443cf92-8eb2-49e5-b05d-fb3260e6de7b/scratchpad/render.mjs)"
+    ]
+  }
+}

@@ -88,6 +88,14 @@ body {
   border-color: #0d3f79;
 }
 
+/* Наведення мусить бути перекрите окремо: у правила .btn:hover:not(:disabled)
+   специфічність вища, тому без цього головна кнопка під курсором ставала
+   білою — разом із білим текстом на ній. */
+.btn--primary:hover:not(:disabled) {
+  color: #fff;
+  background: #0d3f79;
+}
+
 :where(button, input, a):focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;

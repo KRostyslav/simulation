@@ -1,7 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { line, dashedLine, disc, ring, rect, polyline, arrow } from "../src/draw.js";
+import {
+  line,
+  dashedLine,
+  disc,
+  ring,
+  rect,
+  polyline,
+  arrow,
+  triangle,
+} from "../src/draw.js";
 
 /** Лічильник викликів замість справжнього контексту канви. */
 function stubContext() {
@@ -69,4 +78,40 @@ test("rect і arrow малюють без винятків", () => {
   rect(ctx, 0, 0, 4, 4, "#fff");
   arrow(ctx, 5, 5, 10, "#fff", -1);
   assert.ok(ctx.calls > 0);
+});
+
+test("triangle заливає площу й не виходить за межі", () => {
+  const ctx = stubContext();
+  const painted = [];
+  ctx.fillRect = (x, y, w, h) => painted.push({ x, y, w, h });
+  // Прямокутний трикутник із катетами 10: залито має бути близько половини
+  // описаного квадрата.
+  triangle(ctx, 0, 0, 10, 0, 0, 10, "#000");
+  const area = painted.reduce((sum, r) => sum + r.w * r.h, 0);
+  assert.ok(area > 40 && area < 80, `залито ${area} пікселів замість ≈55`);
+  for (const r of painted) {
+    assert.ok(r.x >= 0 && r.x + r.w <= 12, `вихід за межі по x: ${r.x}+${r.w}`);
+    assert.ok(r.y >= 0 && r.y <= 10, `вихід за межі по y: ${r.y}`);
+  }
+});
+
+test("triangle не зациклюється й не малює на нескінченних координатах", () => {
+  const ctx = stubContext();
+  for (const args of [
+    [0, 0, NaN, 10, 5, 5],
+    [Infinity, 0, 10, 10, 5, 5],
+    [0, 0, 10, -Infinity, 5, 5],
+  ]) {
+    triangle(ctx, ...args, "#000");
+  }
+  assert.equal(ctx.calls, 0, "нічого не мало намалюватись");
+});
+
+test("вироджений трикутник не ламає заливку", () => {
+  const ctx = stubContext();
+  // Три точки на одній прямій: площі немає, але й падати нема з чого.
+  triangle(ctx, 0, 0, 5, 5, 10, 10, "#000");
+  assert.ok(ctx.calls > 0 && ctx.calls < 100, `${ctx.calls} викликів`);
+  // Три однакові точки — теж законний вироджений випадок.
+  triangle(ctx, 3, 3, 3, 3, 3, 3, "#000");
 });

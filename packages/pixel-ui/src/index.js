@@ -9,6 +9,7 @@ export {
   disc,
   ring,
   dither,
+  triangle,
   frame,
   arrow,
   plotAxes,
