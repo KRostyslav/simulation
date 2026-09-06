@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "cd ../.. && npx turbo run build --filter=@edu/semiconductor",
+  "outputDirectory": "dist",
+  "ignoreCommand": "npx turbo-ignore @edu/semiconductor"
+}

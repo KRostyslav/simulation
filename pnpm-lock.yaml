@@ -12,6 +12,22 @@ importers:
         specifier: ^2.3.3
         version: 2.10.12
 
+  apps/diode-lab:
+    dependencies:
+      '@edu/diode':
+        specifier: workspace:*
+        version: link:../../packages/diode
+      '@edu/explain':
+        specifier: workspace:*
+        version: link:../../packages/explain
+      '@edu/pixel-ui':
+        specifier: workspace:*
+        version: link:../../packages/pixel-ui
+    devDependencies:
+      vite:
+        specifier: ^6.0.7
+        version: 6.4.3
+
   apps/semiconductor:
     dependencies:
       '@edu/diode':
